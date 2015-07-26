@@ -52,3 +52,5 @@ __Note__ leiningen is smart about dependencies and will download them when they 
 `lein clr compile` will compile the project
 
 `lein clr test` will run tests
+
+__NOTE__ There is a bug for OSX users that causing compilation to not work (http://dev.clojure.org/jira/browse/CLJCLR-48?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel)
