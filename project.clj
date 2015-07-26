@@ -7,6 +7,7 @@
   :warn-on-reflection true
   :min-lein-version "2.0.0"
   :plugins [[lein-clr "0.2.1"]]
+  :resource-paths ["src"]
   :clr {:cmd-templates  {:clj-exe   [[?PATH "mono"] ["ClojureCLR" %1]]
                          :clj-dep   [[?PATH "mono"] ["target/clr/clj/Debug 4.0" %1]]
                          :clj-url   "http://sourceforge.net/projects/clojureclr/files/clojure-clr-1.4.1-Debug-4.0.zip/download"
