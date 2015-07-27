@@ -12,6 +12,8 @@ There is a bug for OSX users that causes Clojure.Main.exe. to immediately crash 
 
 __Note__ leiningen is smart about dependencies and will download them when they are needed (usually the first run). This will delay actions, but should be a one-time operation.
 
+The lein clr plugin is used to automate building with ClojureCLR (https://github.com/kumarshantanu/lein-clr)
+
 From the application directory you can run several commands
 
 `lein clr compile` will compile the project
