@@ -38,6 +38,15 @@ From the application directory you can run several commands
 
 `lein clr run -m foo.core "src/foo/test.txt"` will load the values from 'test.txt'
 
+included test files (found in src/foo)
+
+* test.txt
+* test3.txt (demonstrated @ https://www.youtube.com/watch?v=kH7weFvjLPY)
+* test4.txt (faulty version of test3.txt)
+* test5.txt (faulty version)
+* test6.txt (faulty version)
+* test7.txt (demonstrated @ https://www.youtube.com/watch?v=EH6h7WA7sDw)
+
 # Test
 
 Currently all tests pass
