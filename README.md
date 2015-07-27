@@ -1,4 +1,4 @@
-# Specificiations
+# Specifications
 
 Write a function in the Clojure programming language which given:
 
