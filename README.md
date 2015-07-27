@@ -1,3 +1,19 @@
+# Specificiations
+
+Write a function in the Clojure programming language which given:
+
+a set of dolls with a name and unique weight and value combination
+an overall weight restriction
+Produces the optimal set of drug-packed porcelain dolls which:
+
+are within the total weight restriction
+maximize the total street value of drugs delivered
+Requirements:
+
+use leiningen - https://github.com/technomancy/leiningen
+include multiple high-level test cases to validate your solution (like the one included below)
+provide instructions in a README for running your test suite from the command line
+
 # Requirements
 
 * Java JDK
