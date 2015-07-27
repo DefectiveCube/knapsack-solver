@@ -52,7 +52,7 @@ Goto http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133
 ## ClojureCLR
 
 * Create a "ClojureCLR" folder in the app directory (e.g. the directory where project.clj is)
-* Download latest binary
+* Download latest binary (http://sourceforge.net/projects/clojureclr/files/)
 * Extract contents to "ClojureCLR" folder
 
 ## .NET
