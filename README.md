@@ -5,6 +5,30 @@
 * ClojureCLR
 * .NET or Mono
 
+## Important Note about OSX and ClojureCLR
+There is a bug for OSX users that causing Clojure.Main.exe. to not work (it crashes immediately) (http://dev.clojure.org/jira/browse/CLJCLR-48?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel)
+
+# Building/Running
+
+__Note__ leiningen is smart about dependencies and will download them when they are needed (usually the first run). This will delay actions, but should be a one-time operation.
+
+From the application directory you can run several commands
+
+`lein clr compile` will compile the project
+
+`lein clr test` will run tests
+
+`lein clr run -m foo.core "src/foo/test.txt"` will load the values from 'test.txt'
+
+# Test
+
+Currently all tests pass
+
+# Issues
+
+* Console output does not always print everything
+* Reflection warning. It does not appear to break anything
+
 # Setup
 
 ## Clojure
@@ -44,13 +68,3 @@ For non-Windows systems, installing mono should be done through a package manage
 ```
 brew install mono
 ```
-
-# Building/Running
-
-__Note__ leiningen is smart about dependencies and will download them when they are needed (usually the first run). This will delay actions, but should be a one-time operation.
-
-`lein clr compile` will compile the project
-
-`lein clr test` will run tests
-
-__NOTE__ There is a bug for OSX users that causing compilation to not work (http://dev.clojure.org/jira/browse/CLJCLR-48?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel)
