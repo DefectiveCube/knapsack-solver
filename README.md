@@ -6,7 +6,7 @@
 * .NET or Mono
 
 ## Important Note about OSX and ClojureCLR
-There is a bug for OSX users that causing Clojure.Main.exe. to not work (it crashes immediately) (http://dev.clojure.org/jira/browse/CLJCLR-48?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel)
+There is a bug for OSX users that causes Clojure.Main.exe. to immediately crash on load (http://dev.clojure.org/jira/browse/CLJCLR-48?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel)
 
 # Building/Running
 
