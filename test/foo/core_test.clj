@@ -2,10 +2,6 @@
   (:use clojure.test
     foo.core))
 
-(deftest can-read-file-test
-  (let [lines (. System.IO.File ReadAllLines "src//foo//test.txt")]
-    (is (= 3 (count lines)))))
-
 (deftest increase-non-zeroes
   (testing "increase-non-zeroes test"
     (is (function? inc-non-zeroes))
@@ -158,7 +154,7 @@
       (is (= (first result) 8))
       (is (= (vec (last result)) [3 2])))
     
-    ; Comment/uncomment when needs as this might generate alot of text on the shell when things break
+    ; Comment/uncomment when needed as this might generate alot of text on the shell when things break
 
     (let [result (get-optimal-solution 
       [  9 13 153  50 15 68 27 39 23 52 11 32 24 48 73 42 43 22  7 18  4 30] 
@@ -181,9 +177,27 @@
       ;20 sally     4   50
 
 
-(reduce deduce-and-track 
-  [[(gen-item 0 0 400) 0 (gen-item 0 0 400) ]
-    [9 150][13 35][153 200][50 160][15 60][68 45][27 60][39 40][23 30][52 10][11 70][32 30][24 15][48 10][73 40][42 70][43 75][22 80][7 20][18 12][4 50][30 10]])
+;(reduce deduce-and-track 
+;  [[(gen-item 0 0 400) 0 (gen-item 0 0 400) ]
+;    [9 150][13 35][153 200][50 160][15 60][68 45][27 60][39 40][23 30][52 10][11 70][32 30][24 15][48 10][73 40][42 70][43 75][22 80][7 20][18 12][4 50][30 10]])
        
 
+))
+
+(deftest run-optimization-test
+  (testing "run-optimization-test"
+    (is (= nil (run-optimization "src/foo/base.txt")))
+    (is (= nil (run-optimization "src/foo/base2.txt")))
+    (is (= nil (run-optimization "src/foo/test.txt")))
+    (is (not= nil (run-optimization "src/foo/test2.txt")))
+    (is (= nil (run-optimization "src/foo/test3.txt")))
+    (is (not= nil (run-optimization "src/foo/test4.txt")))
+    (is (not= nil  (run-optimization "src/foo/test5.txt")))
+    (is (not= nil (run-optimization "src/foo/test6.txt")))
+    (is (= nil (run-optimization "src/foo/test7.txt")))
+    (run-optimization "src/foo/test8.txt")
+    (run-optimization "src/foo/test9.txt")
+    (run-optimization "src/foo/test10.txt")
+    (run-optimization "src/foo/test11.txt")
+    (run-optimization "src/foo/test12.txt")
 ))

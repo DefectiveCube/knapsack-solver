@@ -1,8 +1,21 @@
 (ns foo.core)
+    (require '[clojure.string :as str])
+
+(defn isCLR [] 
+  (try 
+    (. (Exception. ) ToString)
+    true
+    (catch Exception ex false)))
+
+(defn isJVM []
+  (try 
+    (. (Exception. ) toString)
+    true
+    (catch Exception ex false)))
 
 (defn mask "bit-masking." [masks bools idx]
-  (if-not (= (count masks) (count bools)) (throw (ArgumentException. "'masks' and 'bools' must match in size")))
-  (if-not (integer? idx) (throw (ArgumentException. "idx must be an integer")))
+  (if-not (= (count masks) (count bools)) (throw (Exception. "'masks' and 'bools' must match in size")))
+  (if-not (integer? idx) (throw (Exception. "idx must be an integer")))
 
   (for [i (range (count bools))]
     (if (get bools i)
@@ -35,11 +48,11 @@
   (vec (mask (vec (get coll 2)) (vec (map not= (get coll 0) nextValue)) (get coll 1)))])
 
 (defn deduce "deduces optimal values of next column" [coll args]
-  (if-not (vector? args) (throw (ArgumentException. "args should be a vector")))
+  (if-not (vector? args) (throw (Exception. "args should be a vector")))
   (vec (get-next coll (get args 0) (get args 1))))
 
 (defn deduce-and-track "deduces optimal values of next column and tracks change (via bitmask)" [coll args]
-  (if-not (vector? args) (throw (ArgumentException. "args should be a vector")))
+  (if-not (vector? args) (throw (Exception. "args should be a vector")))
   (let [nextValue (vec (get-next (get coll 0) (get args 0) (get args 1)))]
     (track coll nextValue)))
 
@@ -72,7 +85,13 @@
   (let [args (build-args weights values capacity)]
     (last (reduce deduce args))))
 
-(defn get-optimal-solution "finds the optimal solutio. returns the optimal value and the indices of items" [weights values capacity]
+(defn get-optimal-solution "finds the optimal solution. returns the optimal value and the indices of items" 
+  [weights values capacity]
+  (if-not (vector? weights) (throw (Exception. "weights should be a vector")))
+  (if-not (vector? values) (throw (Exception. "values should be a vector")))
+  (if-not (integer? capacity) (throw (Exception. "capacity should be an integer")))
+  (if-not (= (count weights) (count values)) (throw (Exception. "the quantity of weights and values is not equal")))
+
   (let [args (build-tracking-args weights values capacity)]
     (let [result (reduce deduce-and-track args)]
       (let [bitmask (last result) n (count weights)]
@@ -83,49 +102,54 @@
           (run-back-track (last result) weights))
         ]))))
 
-
-(defn write-line [s] (. Console WriteLine s))
-(defn write [s] (. Console Write s))
-
-(defn parse-int [n] 
-  (if-not (string? n) (throw (ArgumentException. "Argument must be a string")))
-  (. Int64 Parse n))
-
-(defn to-int-array [s]
-  (if-not (string? s) (throw (ArgumentException. "Argument must be a string")))
-  (long-array (.Split s (char-array " ") StringSplitOptions/RemoveEmptyEntries)))
-
 (defn print-results [data weights values & names]
-  (write "The optimal value is: ")
-  (write-line (first data))
-  (write "Items to select: ")
-  (write-line (count (last data)))
+  (println (format "The optimal value is: %s" (first data)))
+  (println (format "Items to select: %s" (count (last data))))
 
-  ;(let [results (reverse (last data))]
-    ;(doseq [i results]
-      ;(write-line i))))
-)
+  (let [results (reverse (last data))]
+    (if (nil? (first names))
+      (doseq [i results]
+        (println (format "Item on index %s with weight of %s and value of %s" 
+          i (get weights i) (get values i))))
+      (let [_names (first names)]
+        (doseq [i results]
+          (println (format "Item on index %s with name of %s, weight of %s, and values of %s" 
+            i (get _names i) (get weights i) (get values i))))))))
 
 (defn run-optimization [file]
-  (write "Using the values from file ")
-  (write-line file)
+  (println "")
+  (println "--- Starting new optimization search ---")
+  (println (format "Using file: %s" file))
+  (println "")
 
-  ;Read all lines
-  (let [lines (. System.IO.File ReadAllLines file)]
-    ; files must contain 3 lines
-    (if (< (count lines) 3) (throw (Exception. "File does not have enough data")))
+  (try
+    (let [lines (str/split-lines (slurp file))]
+      
+      (if (< (count lines) 3) (throw (Exception. "file does not have enough data")))
 
-    (let [capacity (aget lines 0) weights (aget lines 1) values (aget lines 2)]
-      (print-results 
-        (get-optimal-solution (vec weights) (vec values) (parse-int capacity))
-        weights
-        values))))
+      (let [
+        capacity (read-string (get lines 0))
+        weights (str/split (get lines 1) #" ") 
+        values (str/split (get lines 2) #" ")
+        names (if (>= (count lines) 4) (str/split (get lines 3) #" "))
+        ]
+
+        (println (format "Capacity: %s" capacity))
+
+        (print-results 
+          (get-optimal-solution 
+            (vec (int-array weights)) 
+            (vec (int-array values)) capacity)
+           weights values names))
+      nil)
+    (catch Exception ex
+      ex)))
 
 (defn -main [& args]
-  (write-line "Hello")
+  (println "Starting Knapsack Problem Solver")
   (if args
     (if (string? (first args)) 
       (run-optimization (first args))
-      (write-line "unrecognized argument"))
-    (write-line "no arguments provided"))
-  (write-line "Session Ended"))
+      (println "unrecognized argument"))
+    (println "no arguments provided"))
+  (println "session Ended"))

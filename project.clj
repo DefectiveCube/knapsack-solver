@@ -3,8 +3,8 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies []
-  :warn-on-reflection true
+  :dependencies [[org.clojure/clojure "1.6.0"]]
+  :warn-on-reflection false
   :min-lein-version "2.0.0"
   :plugins [[lein-clr "0.2.1"]]
   :resource-paths ["src"]
