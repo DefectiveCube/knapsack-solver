@@ -13,6 +13,20 @@
     true
     (catch Exception ex false)))
 
+(defn printExceptionMessage [ex]
+  (if (isJVM) 
+    (println (. ex getMessage)))
+  (if (isCLR)
+    (println (. ex Message))))
+
+(defn fileExists [file] 
+  (if (isJVM)
+    (load-string 
+      (format "(.exists (clojure.java.io/file \"%s\" ))" file))
+    (if (isCLR)      
+      (load-string 
+        (format "(System.IO.File/Exists \"%s\" )" file)))))
+
 (defn mask "bit-masking." [masks bools idx]
   (if-not (= (count masks) (count bools)) (throw (Exception. "'masks' and 'bools' must match in size")))
   (if-not (integer? idx) (throw (Exception. "idx must be an integer")))
@@ -123,7 +137,9 @@
   (println "")
 
   (try
-    (let [lines (str/split-lines (slurp file))]
+    (if-not (fileExists file) (throw (Exception. "file not found")))
+
+    (let [lines (str/split-lines (slurp file :encoding "ISO-8859-1"))]
       
       (if (< (count lines) 3) (throw (Exception. "file does not have enough data")))
 
@@ -138,11 +154,12 @@
 
         (print-results 
           (get-optimal-solution 
-            (vec (int-array weights)) 
-            (vec (int-array values)) capacity)
+            (vec (map read-string weights)) 
+            (vec (map read-string values)) capacity)
            weights values names))
       nil)
     (catch Exception ex
+      (printExceptionMessage ex)
       ex)))
 
 (defn -main [& args]
@@ -151,5 +168,4 @@
     (if (string? (first args)) 
       (run-optimization (first args))
       (println "unrecognized argument"))
-    (println "no arguments provided"))
-  (println "session Ended"))
+    (println "no arguments provided")))
