@@ -187,7 +187,7 @@
 (deftest run-optimization-test
   (testing "run-optimization-test"
     (is (= nil (run-optimization "src/foo/base.txt")))
-    (is (not= nil (run-optimization "src/foo/base2.txt")))
+    (is (= nil (run-optimization "src/foo/base2.txt")))
     (is (= nil (run-optimization "src/foo/test.txt")))
     (is (not= nil (run-optimization "src/foo/test2.txt")))
     (is (= nil (run-optimization "src/foo/test3.txt")))
@@ -195,9 +195,9 @@
     (is (not= nil  (run-optimization "src/foo/test5.txt")))
     (is (not= nil (run-optimization "src/foo/test6.txt")))
     (is (= nil (run-optimization "src/foo/test7.txt")))
-    (run-optimization "src/foo/test8.txt")
-    (run-optimization "src/foo/test9.txt")
-    (run-optimization "src/foo/test10.txt")
-    (run-optimization "src/foo/test11.txt")
-    (run-optimization "src/foo/test12.txt")
+    (is (not= nil (run-optimization "src/foo/test8.txt")))
+    (is (not= nil (run-optimization "src/foo/test9.txt")))
+    (is (not= nil (run-optimization "src/foo/test10.txt")))
+    (is (= nil (run-optimization "src/foo/test11.txt")))
+    (is (= nil (run-optimization "src/foo/test12.txt")))
 ))

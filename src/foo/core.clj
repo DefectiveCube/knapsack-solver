@@ -15,9 +15,9 @@
 
 (defn printExceptionMessage [ex]
   (if (isJVM) 
-    (println (. ex getMessage)))
+    (println (type ex) (. ex getMessage)))
   (if (isCLR)
-    (println (. ex Message))))
+    (println (type ex) (. ex Message))))
 
 (defn fileExists [file] 
   (if (isJVM)
@@ -145,7 +145,7 @@
 
       (let [
         capacity (read-string (get lines 0))
-        weights (str/split (get lines 1) #" ") 
+        weights (str/split (get lines 1) #" ")
         values (str/split (get lines 2) #" ")
         names (if (>= (count lines) 4) (str/split (get lines 3) #" "))
         ]
