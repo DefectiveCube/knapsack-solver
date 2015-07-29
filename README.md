@@ -22,8 +22,11 @@ provide instructions in a README for running your test suite from the command li
 
 * Java JDK
 * Leiningen
+
+## Additional Requirements for CLR
+
 * ClojureCLR
-* .NET or Mono
+* .NET 3.5 (minimum), .NET 4.0 (recommended), or Mono
 
 ## Important Note about OSX and ClojureCLR
 There is a bug for OSX users that causes Clojure.Main.exe. to immediately crash on load (http://dev.clojure.org/jira/browse/CLJCLR-48?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel)
