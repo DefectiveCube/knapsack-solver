@@ -1,6 +1,6 @@
 ## Updates
 
-The code have been reworked so they will work independent of the framework.
+The code has been reworked so it will work independent of the underlying framework.
 
 # Specifications
 
