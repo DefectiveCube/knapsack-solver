@@ -80,11 +80,7 @@ Currently all tests pass
 
 # Recent Changes
 
-* reflection warnings for unresolves items has been disabled
-
-# Issues
-
-* JVM version doesn't provide correct console output
+* reflection warnings for unresolved items has been disabled
 
 # Setup
 
